@@ -1,0 +1,94 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXFileReference section */
+		AA61ED1616827A55006FFAF9 /* airplane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = airplane.png; path = ../airplane.png; sourceTree = "<group>"; };
+		AA61ED1716827A55006FFAF9 /* bird.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bird.png; path = ../bird.png; sourceTree = "<group>"; };
+		AA61ED1816827A55006FFAF9 /* boat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = boat.png; path = ../boat.png; sourceTree = "<group>"; };
+		AA61ED1916827A55006FFAF9 /* buildings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buildings.png; path = ../buildings.png; sourceTree = "<group>"; };
+		AA61ED1A16827A55006FFAF9 /* gaussian.lua */ = {isa = PBXFileReference; lastKnownFileType = text; name = gaussian.lua; path = ../gaussian.lua; sourceTree = "<group>"; };
+		AA61ED1B16827A55006FFAF9 /* kmeans.lua */ = {isa = PBXFileReference; lastKnownFileType = text; name = kmeans.lua; path = ../kmeans.lua; sourceTree = "<group>"; };
+		AA61ED1C16827A55006FFAF9 /* main.lua */ = {isa = PBXFileReference; lastKnownFileType = text; name = main.lua; path = ../main.lua; sourceTree = "<group>"; };
+		AA61ED1D16827A55006FFAF9 /* mcluster.lua */ = {isa = PBXFileReference; lastKnownFileType = text; name = mcluster.lua; path = ../mcluster.lua; sourceTree = "<group>"; };
+		AA61ED1E16827A55006FFAF9 /* mog.lua */ = {isa = PBXFileReference; lastKnownFileType = text; name = mog.lua; path = ../mog.lua; sourceTree = "<group>"; };
+		AA61ED1F16827A55006FFAF9 /* README */ = {isa = PBXFileReference; lastKnownFileType = text; name = README; path = ../README; sourceTree = "<group>"; };
+		AA61ED2016827A55006FFAF9 /* ReadMe.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = ReadMe.txt; path = ../ReadMe.txt; sourceTree = "<group>"; };
+		AA61ED2116827A55006FFAF9 /* tile.lua */ = {isa = PBXFileReference; lastKnownFileType = text; name = tile.lua; path = ../tile.lua; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		AA61ED0D16827A36006FFAF9 = {
+			isa = PBXGroup;
+			children = (
+				AA61ED1616827A55006FFAF9 /* airplane.png */,
+				AA61ED1716827A55006FFAF9 /* bird.png */,
+				AA61ED1816827A55006FFAF9 /* boat.png */,
+				AA61ED1916827A55006FFAF9 /* buildings.png */,
+				AA61ED1A16827A55006FFAF9 /* gaussian.lua */,
+				AA61ED1B16827A55006FFAF9 /* kmeans.lua */,
+				AA61ED1C16827A55006FFAF9 /* main.lua */,
+				AA61ED1D16827A55006FFAF9 /* mcluster.lua */,
+				AA61ED1E16827A55006FFAF9 /* mog.lua */,
+				AA61ED1F16827A55006FFAF9 /* README */,
+				AA61ED2016827A55006FFAF9 /* ReadMe.txt */,
+				AA61ED2116827A55006FFAF9 /* tile.lua */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		AA61ED0F16827A36006FFAF9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+			};
+			buildConfigurationList = AA61ED1216827A36006FFAF9 /* Build configuration list for PBXProject "Assignment4" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = AA61ED0D16827A36006FFAF9;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		AA61ED1416827A36006FFAF9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		AA61ED1516827A36006FFAF9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AA61ED1216827A36006FFAF9 /* Build configuration list for PBXProject "Assignment4" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA61ED1416827A36006FFAF9 /* Debug */,
+				AA61ED1516827A36006FFAF9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AA61ED0F16827A36006FFAF9 /* Project object */;
+}

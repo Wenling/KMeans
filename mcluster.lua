@@ -29,38 +29,38 @@ t7> = c:eval(torch.rand(20))
 1.35269220869
 
 The center vector is stored in c.m. You can use the method set_m to update it
-t7> c:set_m(torch.rand(20)) 
+t7> c:set_m(torch.rand(20))
 ]]
 
 -- Return a cluster object
 -- n: the dimension of data
 function mcluster(n)
-   -- Create the object
-   local c = {}
-   -- Allocate the center
-   c.m = torch.zeros(n)
-   -- Set the mean
-   function c:set_m(m)
-      c.m = m:clone()
-   end
-   -- Evaluate to get the euclidean distance
-   function c:eval(x)
-      -- Return the distance
-      return torch.norm(x-c.m)
-   end
-   -- Learn the mean from set of examples
-   function c:learn(x,r)
-      -- The new mean
-      local m = torch.zeros(n)
-      -- The normalization factor of weights
-      local w = torch.sum(r)
-      -- Weighted mean
-      for i = 1,x:size()[1] do
-	 m = m + x[i]*r[i]/w
-      end
-      -- Set the mean
-      c.m = m
-   end
-   -- Return the object
-   return c
+	-- Create the object
+	local c = {}
+	-- Allocate the center
+	c.m = torch.zeros(n)
+	-- Set the mean
+	function c:set_m(m)
+		c.m = m:clone()
+	end
+	-- Evaluate to get the euclidean distance
+	function c:eval(x)
+		-- Return the distance
+		return torch.norm(x-c.m)
+	end
+	-- Learn the mean from set of examples
+	function c:learn(x,r)
+		-- The new mean
+		local m = torch.zeros(n)
+		-- The normalization factor of weights
+		local w = torch.sum(r)
+		-- Weighted mean
+		for i = 1,x:size()[1] do
+			m = m + x[i]*r[i]/w
+		end
+		-- Set the mean
+		c.m = m
+	end
+	-- Return the object
+	return c
 end

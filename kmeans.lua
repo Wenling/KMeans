@@ -33,6 +33,97 @@ dofile("mcluster.lua")
 -- n: dimension of data
 -- k: number of clusters
 function kmeans(n,k)
--- Remove the following line and add your stuff
-print("You have to define this function by yourself!");
+	-- The km object stores the i-th cluster at km[i]
+	local km = {}
+	km.features = n
+	km.cluster_size = k
+	km.datasize = 0 -- # of tiles
+	km.R = torch.zeros(1, 1) -- Responsibilities
+
+	-- init km
+	for i = 1, km.cluster_size do
+		km[i] = mcluster(km.features)
+	end
+
+	function km:min_dist(x)
+		local distance = torch.ones(km.cluster_size)
+		for i = 1, km.cluster_size do
+			distance[i] = km[i]:eval(x)
+		end
+		local y, index = torch.min(distance, 1)
+		return index[1]
+	end
+
+	-- Decision function
+	-- Return a scalar representing cluster index.
+	function km:g(x)
+		return km:min_dist(x)
+	end
+
+	-- Output function
+	function km:f(x)
+		return km[km:g(x)].m
+	end
+
+	-- Learn the clusters using x
+	function km:learn(X)
+		local epoch = 100
+		local datasize = X:size()[1] -- set datasize
+		km.R:resize(datasize, km.cluster_size):zero() -- Responsibility matrix, 1 if Xi belongs to Rij, and 0 else
+
+		-- init clusters
+		local rand = torch.randperm(datasize)
+		for i = 1, km.cluster_size do
+			km[i]:set_m(X[rand[i]])
+		end
+		-- repeat until converge
+		for k = 1, epoch do
+			local converged = true
+			-- compute center of each sample
+			for i = 1, datasize do
+				local new_center = km:g(X[i])
+				if km.R[i][new_center] ~= 1 then
+					converged = false
+					km.R[i]:fill(0) -- this is slow
+					km.R[i][new_center] = 1
+				end
+			end
+			if converged == true then
+				break
+			end
+			-- update cluster
+			for j = 1, km.cluster_size do
+				-- one cluster converge to one point (dist to itself is 0)
+				if torch.sum(km.R:select(2,j)) <= 0 then
+					km[j]:set_m(x[torch.randperm(datasize)[1]])
+				else
+					km[j]:learn(X, km.R:select(2, j))
+				end
+			end
+			print("iter=".. k)
+		end
+	end
+
+	-- compress image
+	function km:compress(X)
+		local X_new = torch.zeros(X:size())
+		local datasize = X:size()[1]
+		for i = 1, datasize do
+			X_new[i] = km:f(X[i]):clone()
+		end
+		return X_new
+	end
+
+	-- loss
+	function km:loss(X, M)
+		local loss = 0
+		local datasize = X:size()[1]
+		for i = 1, datasize do
+			-- avg (||Xi - Tk(i)||^2)
+			loss = loss * ((i - 1) / i) + torch.norm(X[i] - M[i])^2 / i
+		end
+		return loss
+	end	
+
+	return km
 end

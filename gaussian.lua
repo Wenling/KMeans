@@ -41,60 +41,60 @@ t7> g:set_c(torch.eye(20))
 -- Return a gaussian object
 -- n: the dimension
 function gaussian(n)
-   -- A constant pi
-   local pi = 3.1415926535897932385
-   -- Create the object
-   local g = {}
-   -- Allocate the mean
-   g.m = torch.zeros(n)
-   -- Allocate the covariance matrix
-   g.c = torch.eye(n)
-   -- Stores the inverse of the covariance matrix
-   g.ci = torch.inverse(g.c)
-   -- Initialize the normalizer (2*pi)^{n/2} * |c|^{1/2}
-   g.normalizer = math.sqrt(math.pow(2*pi,n)*torch.prod(torch.symeig(g.c),1)[1])
-   -- Set the mean
-   function g:set_m(m)
-      -- Copy data
-      g.m = m:clone()
-   end
-   -- Set the covariance matrix
-   function g:set_c(c)
-      -- Copy data
-      g.c = c:clone()
-      -- Get the inverse
-      g.ci = torch.inverse(g.c)
-      -- Compute the normalizer (2*pi)^{n/2} * |c|^{1/2}
-      g.normalizer = math.sqrt(math.pow(2*pi,n)*torch.prod(torch.symeig(g.c),1)[1])
-   end
-   -- Return the likelihood of vector x under the gaussian
-   function g:eval(x)
-      -- Return the probability
-      return math.exp(-1/2*torch.dot(x-g.m,torch.mv(g.ci,x-g.m)))/g.normalizer
-   end
-   -- Learn the mean and variance from a set of vectors
-   -- x: a matrix of size m*n, indicating m samples
-   -- r: a vector of size m indicating the weight of each sample
-   -- p: a regularization parameter to ensure g.c is non-singular. Make something like 1e-4 will be good.
-   function g:learn(x,r,p)
-      -- The new mean
-      local m = torch.zeros(n)
-      -- The new covariance
-      local c = torch.eye(n)*p
-      -- The normalization factor of weights
-      local w = torch.sum(r)
-      -- Weighted mean
-      for i = 1,x:size()[1] do
-	 m = m + x[i]*r[i]/w
-      end
-      -- Weighted covariance
-      for i = 1,x:size()[1] do
-	 c = c + torch.ger(x[i]-m,x[i]-m)*r[i]/w
-      end
-      -- Set the mean and covariance
-      g:set_m(m)
-      g:set_c(c)
-   end
-   -- Return the object
-   return g
+	-- A constant pi
+	local pi = 3.1415926535897932385
+	-- Create the object
+	local g = {}
+	-- Allocate the mean
+	g.m = torch.zeros(n)
+	-- Allocate the covariance matrix
+	g.c = torch.eye(n)
+	-- Stores the inverse of the covariance matrix
+	g.ci = torch.inverse(g.c)
+	-- Initialize the normalizer (2*pi)^{n/2} * |c|^{1/2}
+	g.normalizer = math.sqrt(math.pow(2*pi,n)*torch.prod(torch.symeig(g.c),1)[1])
+	-- Set the mean
+	function g:set_m(m)
+		-- Copy data
+		g.m = m:clone()
+	end
+	-- Set the covariance matrix
+	function g:set_c(c)
+		-- Copy data
+		g.c = c:clone()
+		-- Get the inverse
+		g.ci = torch.inverse(g.c)
+		-- Compute the normalizer (2*pi)^{n/2} * |c|^{1/2}
+		g.normalizer = math.sqrt(math.pow(2*pi,n)*torch.prod(torch.symeig(g.c),1)[1])
+	end
+	-- Return the likelihood of vector x under the gaussian
+	function g:eval(x)
+		-- Return the probability
+		return math.exp(-1/2*torch.dot(x-g.m,torch.mv(g.ci,x-g.m)))/g.normalizer
+	end
+	-- Learn the mean and variance from a set of vectors
+	-- x: a matrix of size m*n, indicating m samples
+	-- r: a vector of size m indicating the weight of each sample
+	-- p: a regularization parameter to ensure g.c is non-singular. Make something like 1e-4 will be good.
+	function g:learn(x,r,p)
+		-- The new mean
+		local m = torch.zeros(n)
+		-- The new covariance
+		local c = torch.eye(n)*p
+		-- The normalization factor of weights
+		local w = torch.sum(r)
+		-- Weighted mean
+		for i = 1,x:size()[1] do
+			m = m + x[i]*r[i]/w
+		end
+		-- Weighted covariance
+		for i = 1,x:size()[1] do
+			c = c + torch.ger(x[i]-m,x[i]-m)*r[i]/w
+		end
+		-- Set the mean and covariance
+		g:set_m(m)
+		g:set_c(c)
+	end
+	-- Return the object
+	return g
 end

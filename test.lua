@@ -20,7 +20,8 @@ function Q21(t, K)
 end
 
 function Q22()
-	local img = 'boat.png'
+	local img = 'buildings.png'
+	local img2 = 'buildings2.png'
 	-- Read file
 	im = tile.imread(img)
 	-- Convert to 7500*64 tiles representing 8x8 patches
@@ -34,7 +35,7 @@ function Q22()
 	-- Show the image
 	image.display(im2)
 	-- The following call can save the image
-	tile.imwrite(im2,'boat2.png')
+	tile.imwrite(im2,img2)
 end
 
 function Q23()
@@ -62,5 +63,5 @@ function Q23()
 	tile.imwrite(im2,'boat3.png')
 end
 
-Q22()
---Q23()
+--Q22()
+Q23()

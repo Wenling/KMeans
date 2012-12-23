@@ -95,7 +95,8 @@ function kmeans(n,k)
 			for j = 1, km.cluster_size do
 				-- one cluster converge to one point (dist to itself is 0)
 				if torch.sum(km.R:select(2,j)) <= 0 then
-					km[j]:set_m(x[torch.randperm(datasize)[1]])
+					print("one cluster converge to one point")
+					km[j]:set_m(X[torch.randperm(datasize)[1]])
 				else
 					km[j]:learn(X, km.R:select(2, j))
 				end

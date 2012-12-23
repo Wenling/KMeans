@@ -78,7 +78,7 @@ function mog(n,k)
 		local diff0 = m:cvg(X)
 		print("L="..diff0)
 		local diff1 = 0
-		local epoch = 10
+		local epoch = 20
 		for i = 1, epoch do
 			m:estep(X)
          	m:mstep(X,p)
@@ -88,7 +88,7 @@ function mog(n,k)
          	if torch.abs((diff0 - diff1) / diff0) < eps then
          		break
          	-- diverged
-         	elseif (diff0 - diff1) / diff0 <= 0 then
+         	elseif (diff0 - diff1) / diff0 > 10 * eps then
          		print("diverged..")
          		break 
          	end
@@ -119,7 +119,12 @@ function mog(n,k)
 	function m:cvg(X)
 		local err = 0
 		for i = 1, m.datasize do
-			err = err - torch.sum(torch.log(m:g(X[i])))
+			local P = torch.zeros(m.gaussian_size)
+			for j = 1, m.gaussian_size do
+				P[j] = m[j]:eval(X[i]) * m.W[j]
+			end
+			local sum = torch.sum(P)
+			err = err - torch.log(sum)
 --			print("log="..err)
 		end
 		return err

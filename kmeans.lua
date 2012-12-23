@@ -124,6 +124,22 @@ function kmeans(n,k)
 		end
 		return loss
 	end	
+	
+	-- Number of bits
+	function km: compress_rate(X)
+		local datasize = X:size()[1]
+		local H = torch.zeros(km.cluster_size)
+		local num_in_cluster = torch.zeros(km.cluster_size) -- number of samples in each cluster
+		for k = 1, km.cluster_size do
+			num_in_cluster[k] = torch.sum(km.R:select(2, k)) 
+		end
+		for k = 1, km.cluster_size do
+			H[k] = num_in_cluster[k] / datasize
+		end
+		local Histogram_Entropy = -torch.sum(H:cmul(torch.log(H):div(torch.log(2))))
+		local Number_of_bits = datasize * Histogram_Entropy
+		return Number_of_bits
+	end
 
 	return km
 end

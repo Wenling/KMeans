@@ -13,6 +13,9 @@ function Q21(t, K)
 	local X_new = km:compress(kt)
 	local loss = km:loss(kt, X_new)
 	print("K="..K.."  Compress_loss="..loss)
+	
+	local num_of_bits = km:compress_rate(X_new)
+	print("K="..K.." Number_of_bits="..num_of_bits)
 	return km, X_new
 end
 
@@ -59,5 +62,5 @@ function Q23()
 	tile.imwrite(im2,'boat3.png')
 end
 
---Q22()
-Q23()
+Q22()
+--Q23()
